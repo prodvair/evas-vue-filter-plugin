@@ -1,3 +1,3 @@
-# Evas Vue Filter
+# Evas Vue Filter Plugin
 
 @prodvair
