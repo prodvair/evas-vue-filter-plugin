@@ -8,7 +8,7 @@ const config = {
     insertPragma: false, // вставлять спец.комментарий в начало файла
     jsxBracketSameLine: false, // где будет завершающий > многострочного jsx-элемента
     jsxSingleQuote: false, // использовать в jsx одинарные кавычки вместо двойных
-    printWidth: 100, // на какой позиции выполнять перенос строки
+    printWidth: 120, // на какой позиции выполнять перенос строки
     proseWrap: 'preserve', // как обрабатывать markdown файлы
     quoteProps: 'as-needed', // свойства объекта в кавычках или без кавычек
     requirePragma: false, // форматировать только файлы со спец.комментарием в начале

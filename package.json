@@ -1,6 +1,6 @@
 {
     "name": "evas-vue-filter-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/evas-js/evas-vue-filter.git"
+        "url": "git+https://github.com/prodvair/evas-vue-filter-plugin.git"
     },
     "keywords": [
         "filter",
@@ -20,11 +20,11 @@
     "author": "prodvair",
     "license": "CC-BY-4.0",
     "bugs": {
-        "url": "https://github.com/evas-js/evas-vue-filter/issues"
+        "url": "https://github.com/prodvair/evas-vue-filter-plugin/issues"
     },
-    "homepage": "https://github.com/evas-js/evas-vue-filter#readme",
+    "homepage": "https://github.com/prodvair/evas-vue-filter-plugin#readme",
     "dependencies": {
-        "evas-vue-store-plugin": "^1.0.1",
+        "evas-vue-store-plugin": "^1.0.2",
         "@prodvair/url-query-params": "^0.0.7"
     }
 }

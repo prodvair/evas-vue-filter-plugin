@@ -1,6 +1,6 @@
 /**
  * Классы для группировки полей.
- * @package evas-vue-filter
+ * @package evas-vue-filter-plugin
  * @author Almaz Farkhutdinov <prodvair.almaz@ya.ru>
  * @license CC-BY-4.0
  */

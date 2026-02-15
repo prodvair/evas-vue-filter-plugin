@@ -1,10 +1,9 @@
 /**
  * Создание контрактов.
- * @package evas-vue-filter
+ * @package evas-vue-filter-plugin
  * @author Almaz Farkhutdinov <prodvair.almaz@ya.ru>
  * @license CC-BY-4.0
  */
-import { FilterModel } from './FilterModel.js'
 
 export const buildDefault = (ctx, fieldNames) => {
     if (!fieldNames?.length) return
@@ -77,64 +76,70 @@ const DEFAULT_CONTRACTS = {
     },
 }
 
-FilterModel.customContract = {}
+export function setFilterContract(FilterModel) {
+    FilterModel.customContract = {}
 
-FilterModel.bodyRules = {
-    filters: {
-        globalSearch: 'globalSearch',
-        groups: 'groups',
-        orders: 'orders',
-        wheres: 'wheres',
-    },
-    page: 'page',
-    limit: 'limit',
-    with: 'with',
-}
+    FilterModel.bodyRules = {
+        filters: {
+            globalSearch: 'globalSearch',
+            groups: 'groups',
+            orders: 'orders',
+            wheres: 'wheres',
+        },
+        page: 'page',
+        limit: 'limit',
+        with: 'with',
+    }
 
-Object.defineProperty(FilterModel, '$contracts', {
-    get: function () {
-        return { ...DEFAULT_CONTRACTS, ...this.customContract }
-    },
-})
-
-Object.defineProperty(FilterModel, '$contractsNames', {
-    get: function () {
-        return Object.keys(this.$contracts)
-    },
-})
-
-FilterModel.$fieldsByTypeOfContract = function (ctx, checkValid = false) {
-    let filedNamesByType = {}
-    this.eachFields(field => {
-        const value = ctx[field.name]
-        const isEmpty = Array.isArray(value) ? value.length < 1 : field.isEmptyValue(value)
-
-        if (!filedNamesByType?.[field.filter]) filedNamesByType[field.filter] = []
-        if (this.$contracts[field.filter] && !isEmpty && (!checkValid || field.isValid(value))) {
-            filedNamesByType[field.filter].push(field.name)
-        }
+    Object.defineProperty(FilterModel, '$contracts', {
+        get: function () {
+            return { ...DEFAULT_CONTRACTS, ...this.customContract }
+        },
     })
-    return filedNamesByType
-}
 
-FilterModel.getBody = function (ctx, filedNamesByType, rules = {}, body = new Proxy({}, {})) {
-    Object.keys(rules).forEach(key => {
-        const ruleOrName = rules[key]
-        if ('string' !== typeof ruleOrName) {
-            body[key] = new Proxy({}, {})
-            this.getBody(ctx, filedNamesByType, ruleOrName, body[key])
-        } else {
-            this.$contracts?.[ruleOrName]?.(body, ctx, filedNamesByType[ruleOrName])
-        }
+    Object.defineProperty(FilterModel, '$contractsNames', {
+        get: function () {
+            return Object.keys(this.$contracts)
+        },
     })
-    return body
-}
 
-FilterModel.prototype.$createRequestBody = function () {
-    this.$closeCollapses()
-    return this.constructor.getBody(
-        this,
-        this.constructor.$fieldsByTypeOfContract(this, true),
-        this.constructor.bodyRules
-    )
+    FilterModel.$fieldsByTypeOfContract = function (ctx, checkValid = false) {
+        let filedNamesByType = {}
+        this.eachFields(field => {
+            const value = ctx[field.name]
+            const isEmpty = Array.isArray(value) ? value.length < 1 : field.isEmptyValue(value)
+
+            if (!filedNamesByType?.[field.filter]) filedNamesByType[field.filter] = []
+            if (
+                this.$contracts[field.filter] &&
+                !isEmpty &&
+                (!checkValid || field.isValid(value))
+            ) {
+                filedNamesByType[field.filter].push(field.name)
+            }
+        })
+        return filedNamesByType
+    }
+
+    FilterModel.getBody = function (ctx, filedNamesByType, rules = {}, body = new Proxy({}, {})) {
+        Object.keys(rules).forEach(key => {
+            const ruleOrName = rules[key]
+            if ('string' !== typeof ruleOrName) {
+                body[key] = new Proxy({}, {})
+                this.getBody(ctx, filedNamesByType, ruleOrName, body[key])
+            } else {
+                this.$contracts?.[ruleOrName]?.(body, ctx, filedNamesByType[ruleOrName])
+            }
+        })
+        return body
+    }
+
+    FilterModel.prototype.$createRequestBody = function () {
+        this.$closeCollapses()
+        return this.constructor.getBody(
+            this,
+            this.constructor.$fieldsByTypeOfContract(this, true),
+            this.constructor.bodyRules
+        )
+    }
 }

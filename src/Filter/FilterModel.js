@@ -1,11 +1,16 @@
 /**
  * Модель фильтров.
- * @package evas-vue-filter
+ * @package evas-vue-filter-plugin
  * @author Almaz Farkhutdinov <prodvair.almaz@ya.ru>
  * @license CC-BY-4.0
  */
 
 import { URLQueryParams } from '@prodvair/url-query-params'
+import { setFilterFields } from './FilterModel.fields.js'
+import { setFilterFieldsDisplay } from './FilterModel.display.js'
+import { setModelRelations } from 'evas-vue-store-plugin/src/Model/Model.relations.js'
+import { setFilterContract } from './FilterModel.contract.js'
+import { setModelValidate } from 'evas-vue-store-plugin/src/Model/Model.validate.js'
 
 export class FilterModel {
     static entityName = null
@@ -80,14 +85,9 @@ FilterModel.isRootModel = function () {
 }
 
 // Расширения модели
-// require('evas-vue-store-plugin/src/Model/Model.fields.js')
-// require('evas-vue-store-plugin/src/Model/Model.fields.display.js')
-// require('evas-vue-store-plugin/src/Model/Model.relations.js')
-// require('evas-vue-store-plugin/src/Model/Model.state.js')
-
-require('./FilterModel.fields.js')
-require('./FilterModel.relations.js')
-require('./FilterModel.display.js')
-require('./FilterModel.state.js')
-require('./FilterModel.contract.js')
-require('./FilterModel.validate.js')
+setFilterFields(FilterModel)
+setModelRelations(FilterModel)
+setFilterFieldsDisplay(FilterModel)
+setFilterState(FilterModel)
+setFilterContract(FilterModel)
+setModelValidate(FilterModel)
