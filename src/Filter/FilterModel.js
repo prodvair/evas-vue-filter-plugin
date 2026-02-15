@@ -8,9 +8,9 @@
 import { URLQueryParams } from '@prodvair/url-query-params'
 import { setFilterFields } from './FilterModel.fields.js'
 import { setFilterFieldsDisplay } from './FilterModel.display.js'
-import { setModelRelations } from 'evas-vue-store-plugin/src/Model/Model.relations.js'
 import { setFilterContract } from './FilterModel.contract.js'
-import { setModelValidate } from 'evas-vue-store-plugin/src/Model/Model.validate.js'
+import { setFilterState } from './FilterModel.state.js'
+import { setFilterValidate } from './FilterModel.validate.js'
 
 export class FilterModel {
     static entityName = null
@@ -25,6 +25,7 @@ export class FilterModel {
     constructor(data = {}, setQuery = false) {
         this.$fill(data)
         if (setQuery) this.$setQueryDataIfExist()
+        console.log(this.constructor.setFields(),new Proxy(this, this),this, '!!!2');
         return new Proxy(this, this)
     }
 
@@ -51,12 +52,12 @@ FilterModel.prototype.$setQueryDataIfExist = function () {
  * @param Object данные [имя поля/связи => значение]
  */
 FilterModel.prototype.$fill = function (data) {
-    const queryData = this.constructor.$queryUrl.queryParamsParse()
     this.constructor.eachFields(field => {
         // конвертируем тип значения
         this.set(this, field.name, field.convertTypeWithDefault(data?.[field.name]))
     })
 }
+
 
 FilterModel.$queryUrl = new URLQueryParams(FilterModel.queryAlias)
 
@@ -86,8 +87,8 @@ FilterModel.isRootModel = function () {
 
 // Расширения модели
 setFilterFields(FilterModel)
-setModelRelations(FilterModel)
 setFilterFieldsDisplay(FilterModel)
 setFilterState(FilterModel)
 setFilterContract(FilterModel)
-setModelValidate(FilterModel)
+setFilterValidate(FilterModel)
+

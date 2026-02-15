@@ -10,6 +10,19 @@ export function setFilterState(FilterModel) {
     setModelState(FilterModel)
 
     /**
+     * Получение имён изменённых полей и связанных записей.
+     * @param Array|null имена полей и/или связей
+     * @return String[]
+     */
+    FilterModel.prototype.$dirtyFields = function (names) {
+        let dirty = []
+        this.constructor.eachFields((field) => {
+            if (this.$isDirtyField(field.name)) dirty.push(field.name)
+        }, names)
+        return dirty
+    }
+
+    /**
      * Проверка поля на изменённость.
      * @param String|Number имя поля
      * @return Boolean

@@ -18,6 +18,8 @@ export const addParamBuilder = (ctx, name, defaultValue = null) => {
 }
 
 export class FieldBuilder extends MainFieldBuilder {
+    /** @var { Boolean } обязательность значения */
+    _required = false
     /** @var { String } тип фильтра */
     _filter
     /** @var { Function } Маска фильтра */

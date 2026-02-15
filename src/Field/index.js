@@ -1,5 +1,6 @@
 export {
     Fieldable,
+    FieldableBuilder,
     VariableField,
     VariableFieldBuilder,
     ValidateErrorTemplator,
@@ -8,4 +9,3 @@ export {
 
 export { Field } from './Field.js'
 export { FieldBuilder } from './FieldBuilder.js'
-export { FieldableBuilder } from './FieldableBuilder.js'

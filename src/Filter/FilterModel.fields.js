@@ -6,8 +6,35 @@
  */
 
 import { setModelFields } from 'evas-vue-store-plugin/src/Model/Model.fields'
+import { FieldBuilder } from '../Field'
+
 export function setFilterFields(FilterModel) {
     setModelFields(FilterModel)
+    // Установка полей
+
+    // обычные поля
+    FilterModel.attr = function (_default) {
+        return new FieldBuilder({ _default })
+    }
+    FilterModel.number = function (_default) {
+        return new FieldBuilder({ _default, _type: 'number' })
+    }
+    FilterModel.string = function (_default) {
+        return new FieldBuilder({ _default, _type: 'string' })
+    }
+    FilterModel.boolean = function (_default) {
+        return new FieldBuilder({ _default, _type: 'boolean' })
+    }
+    FilterModel.array = function (_itemOf, _default) {
+        return new FieldBuilder({ _itemOf, _default, _type: 'array' })
+    }
+    FilterModel.object = function (_itemOf, _default = {}) {
+        return new FieldBuilder({ _itemOf, _default, _type: 'object' })
+    }
+    FilterModel.null = function () {
+        return new FieldBuilder({ _type: 'null' })
+    }
+
 
     /**
      * Очистка данных полей.
