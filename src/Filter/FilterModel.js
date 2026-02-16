@@ -25,7 +25,6 @@ export class FilterModel {
     constructor(data = {}, setQuery = false) {
         this.$fill(data)
         if (setQuery) this.$setQueryDataIfExist()
-        console.log(this.constructor.setFields(),new Proxy(this, this),this, '!!!2');
         return new Proxy(this, this)
     }
 
